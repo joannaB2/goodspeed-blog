@@ -1,4 +1,6 @@
-import { Button, Box } from '@radix-ui/themes';
+'use client';
+
+import { Box } from '@radix-ui/themes';
 import PostList from '@/components/PostList';
 
 export default function PostListPage() {
