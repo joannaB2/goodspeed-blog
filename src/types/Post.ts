@@ -4,5 +4,5 @@ export interface Post {
   id: string;
   content: string;
   date: Date | null;
-  tags: string[] | [];
+  tags: string;
 }
