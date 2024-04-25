@@ -1,9 +1,10 @@
-import { Button } from '@radix-ui/themes';
+import { Button, Box } from '@radix-ui/themes';
+import PostList from '@/components/PostList';
 
-export default function Home() {
+export default function PostListPage() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      <Button>Hello</Button>
-    </h1>
+    <Box>
+      <PostList />
+    </Box>
   );
 }

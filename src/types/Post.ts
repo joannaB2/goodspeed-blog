@@ -1,6 +1,8 @@
 export interface Post {
-    author: string,
-    id: number,
-    content: string,
-    timestamp: number,
+  title: string;
+  lead: string;
+  id: string;
+  content: string;
+  date: Date | null;
+  tags: string[] | [];
 }
