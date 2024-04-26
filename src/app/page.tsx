@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Heading } from '@radix-ui/themes';
-import PostList from '@/components/PostList';
+import PostList from '@/components/postList/PostList';
 import Link from 'next/link';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { useRoleContext } from '@/contexts/useRoleContext';
@@ -10,13 +10,17 @@ import { useState } from 'react';
 import DisplayListAs from '@/components/filters/DisplayListAs';
 import { usePostStore } from '@/store/postStore';
 import { emptyListAuthor, emptyListReader } from '@/types/Post';
-import SelectTag from '@/components/postList/SelectTag';
+import SelectTag from '@/components/filters/SelectTag';
 
 export type ListMode = 'list' | 'cards';
+export const LIST_MODE = {
+  LIST: 'list',
+  CARDS: 'cards',
+} as const;
 
 export default function PostListPage() {
   const { selectedRole } = useRoleContext();
-  const [displayMode, setDisplayMode] = useState<ListMode>('list');
+  const [displayMode, setDisplayMode] = useState<ListMode>(LIST_MODE.LIST);
   const [tagFilter, setTagFilter] = useState<string | null>(null);
   const { postList } = usePostStore();
 

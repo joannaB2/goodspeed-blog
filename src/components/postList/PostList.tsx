@@ -4,8 +4,8 @@ import { useRoleContext } from '@/contexts/useRoleContext';
 import { usePostStore } from '@/store/postStore';
 import { format } from 'date-fns';
 import Link from 'next/link';
-import ListItem from './postList/ListItem';
-import CardItem from './postList/CardItem';
+import ListItem from './ListItem';
+import CardItem from './CardItem';
 import { ListMode } from '@/app/page';
 import { Post } from '@/types/Post';
 
