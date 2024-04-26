@@ -1,8 +1,8 @@
 'use client';
 
-import { ListMode } from '@/app/page';
+import { LIST_MODE, ListMode } from '@/app/page';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-import { SetStateAction, useContext, useEffect, useState } from 'react';
+import { SetStateAction } from 'react';
 
 interface DisplayListAsProps {
   setDisplayMode: React.Dispatch<SetStateAction<ListMode>>;
@@ -22,10 +22,16 @@ const DisplayListAs = ({ setDisplayMode }: DisplayListAsProps) => {
         setDisplayMode(value);
       }}
     >
-      <ToggleGroup.Item className={toggleGroupItemClasses} value="list">
+      <ToggleGroup.Item
+        className={toggleGroupItemClasses}
+        value={LIST_MODE.LIST}
+      >
         Lista
       </ToggleGroup.Item>
-      <ToggleGroup.Item className={toggleGroupItemClasses} value="cards">
+      <ToggleGroup.Item
+        className={toggleGroupItemClasses}
+        value={LIST_MODE.CARDS}
+      >
         Karty
       </ToggleGroup.Item>
     </ToggleGroup.Root>

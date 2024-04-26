@@ -1,6 +1,6 @@
 'use client';
 
-import PostForm from '@/components/PostForm';
+import PostForm from '@/components/post/PostForm';
 import GoToListButton from '@/components/shared/GoToListButton';
 import { useRoleContext } from '@/contexts/useRoleContext';
 import { ROLE } from '@/types/Role';
