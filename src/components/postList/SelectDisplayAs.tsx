@@ -1,49 +1,61 @@
-import React from 'react';
-import * as Select from '@radix-ui/react-select';
+import React, { SetStateAction, useState } from 'react';
+import * as RadixSelect from '@radix-ui/react-select';
 
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
+import { ChevronUpIcon } from '@radix-ui/react-icons';
 
-const SelectDislayAs = () => (
-  <Select.Root>
-    <Select.Trigger
-      className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-      aria-label="Food"
+interface SelectDisplayAs {
+  setTagFilter: React.Dispatch<SetStateAction<string | null>>;
+  tags: string[];
+}
+
+const SelectDisplayAs = ({ setTagFilter, tags }: SelectDisplayAs) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  const onChange = (value: string) => {
+    const filterValue = value === 'all' ? '' : value;
+    setValue(filterValue);
+
+    setTagFilter(filterValue);
+  };
+
+  return (
+    <RadixSelect.Root
+      value={value}
+      onValueChange={onChange}
+      open={open}
+      onOpenChange={setOpen}
+      defaultValue="list"
     >
-      <Select.Value placeholder="Select a fruit…" />
-      <Select.Icon className="text-violet11">
-        <ChevronDownIcon />
-      </Select.Icon>
-    </Select.Trigger>
-    <Select.Portal>
-      <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
-        <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
+      <RadixSelect.Trigger
+        aria-label="tags"
+        className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] w-[150px] items-center justify-between gap-[5px] rounded border px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+      >
+        <RadixSelect.Value  placeholder="Wyszukaj po tagach">
+          {value}
+        </RadixSelect.Value>
+        <RadixSelect.Icon className="select-icon">
           <ChevronUpIcon />
-        </Select.ScrollUpButton>
-        <Select.Viewport className="p-[5px]">
-          <Select.Group>
-            <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
-              Fruits
-            </Select.Label>
-          </Select.Group>
+        </RadixSelect.Icon>
+      </RadixSelect.Trigger>
+      <RadixSelect.Content
+        className="w-[150px] overflow-hidden rounded-md  border bg-neutral-800  p-2 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
+        role="dialog"
+        aria-label="Languages"
+        position="popper"
+        sideOffset={4}
+      >
+        <RadixSelect.Item value={'all'}>
+          Brak
+        </RadixSelect.Item>
+        {tags.map((tag: string) => (
+          <RadixSelect.Item value={tag}>
+            {tag}
+          </RadixSelect.Item>
+        ))}
+      </RadixSelect.Content>
+    </RadixSelect.Root>
+  );
+};
 
-          <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
-
-          <Select.Group>
-            <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
-              Vegetables
-            </Select.Label>
-
-            <Select.Item value="leek">Leek</Select.Item>
-          </Select.Group>
-
-          <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
-        </Select.Viewport>
-        <Select.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-          <ChevronDownIcon />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select.Portal>
-  </Select.Root>
-);
-
-export default SelectDislayAs;
+export default SelectDisplayAs;

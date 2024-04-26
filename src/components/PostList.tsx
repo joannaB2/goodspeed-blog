@@ -1,24 +1,30 @@
 'use client';
 
+import { useRoleContext } from '@/contexts/useRoleContext';
 import { usePostStore } from '@/store/postStore';
-import { Box, Heading } from '@radix-ui/themes';
+import { format } from 'date-fns';
 import Link from 'next/link';
+import ListItem from './postList/ListItem';
+import CardItem from './postList/CardItem';
+import { ListMode } from '@/app/page';
+import { Post } from '@/types/Post';
 
-const PostList = () => {
-  const { postList } = usePostStore();
+interface PostListProps {
+  mode: ListMode;
+  postsToDisplay: Post[];
+}
+
+const PostList = ({ mode, postsToDisplay }: PostListProps) => {
+  const ulListClasses = 'divide-y';
+  const ulCardClasses = 'grid grid-cols-3 gap-4';
 
   return (
     <>
-      <Heading as="h2" className="mb-4">
-        Lista postów
-      </Heading>
-      <Box className="flex"></Box>
-      <ul className="divide-y">
-        {postList?.map((post) => (
-          <li className="py-4" key={post.id}>
-            {post.title} <Link href={`/post/${post.id}`}>Czytaj dalej</Link>
-          </li>
-        ))}
+      <ul className={mode === 'cards' ? ulCardClasses : ulListClasses}>
+        {postsToDisplay?.map((post) => {
+          if (mode === 'list') return <ListItem post={post} key={post.id} />;
+          return <CardItem post={post} key={post.id} />;
+        })}
       </ul>
     </>
   );
