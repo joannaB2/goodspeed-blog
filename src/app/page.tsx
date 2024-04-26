@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { useRoleContext } from '@/contexts/useRoleContext';
 import { ROLE } from '@/types/Role';
-import SelectDisplayAs from '@/components/postList/SelectDisplayAs';
 import { useState } from 'react';
 import DisplayListAs from '@/components/filters/DisplayListAs';
 import { usePostStore } from '@/store/postStore';
 import { emptyListAuthor, emptyListReader } from '@/types/Post';
+import SelectTag from '@/components/postList/SelectTag';
 
 export type ListMode = 'list' | 'cards';
 
@@ -44,8 +44,8 @@ export default function PostListPage() {
       <Box className="mb-4 flex  items-center justify-between">
         <h2 className=" text-2xl">Lista postów</h2>
         <Box className="flex items-center space-x-4">
-          {uniqueTags.length && (
-            <SelectDisplayAs setTagFilter={setTagFilter} tags={uniqueTags} />
+          {uniqueTags.length !== 0 && (
+            <SelectTag setTagFilter={setTagFilter} tags={uniqueTags} />
           )}
 
           <DisplayListAs setDisplayMode={setDisplayMode} />
@@ -59,7 +59,7 @@ export default function PostListPage() {
       {postList.length ? (
         <PostList mode={displayMode} postsToDisplay={postsToDisplay} />
       ) : (
-        <Heading as="h3" align={'center'} m={2}>
+        <Heading as="h3" align={'center'} m={'2'}>
           {emptyListMessage}
         </Heading>
       )}

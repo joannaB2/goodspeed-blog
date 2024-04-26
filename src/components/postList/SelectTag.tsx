@@ -8,7 +8,7 @@ interface SelectDisplayAs {
   tags: string[];
 }
 
-const SelectDisplayAs = ({ setTagFilter, tags }: SelectDisplayAs) => {
+const SelectTag = ({ setTagFilter, tags }: SelectDisplayAs) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
@@ -31,7 +31,7 @@ const SelectDisplayAs = ({ setTagFilter, tags }: SelectDisplayAs) => {
         aria-label="tags"
         className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] w-[150px] items-center justify-between gap-[5px] rounded border px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
       >
-        <RadixSelect.Value  placeholder="Wyszukaj po tagach">
+        <RadixSelect.Value placeholder="Wyszukaj po tagach">
           {value}
         </RadixSelect.Value>
         <RadixSelect.Icon className="select-icon">
@@ -45,11 +45,9 @@ const SelectDisplayAs = ({ setTagFilter, tags }: SelectDisplayAs) => {
         position="popper"
         sideOffset={4}
       >
-        <RadixSelect.Item value={'all'}>
-          Brak
-        </RadixSelect.Item>
+        <RadixSelect.Item value={'all'}>Brak</RadixSelect.Item>
         {tags.map((tag: string) => (
-          <RadixSelect.Item value={tag}>
+          <RadixSelect.Item value={tag} key={tag}>
             {tag}
           </RadixSelect.Item>
         ))}
@@ -58,4 +56,4 @@ const SelectDisplayAs = ({ setTagFilter, tags }: SelectDisplayAs) => {
   );
 };
 
-export default SelectDisplayAs;
+export default SelectTag;

@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware';
 interface PostStore {
   postList: Post[] | [];
   addPost: (post: Post) => void;
-  // editPost: (post: Post) => void;
+  editPost: (post: Post) => void;
 }
 
 export const usePostStore = create<PostStore>()(
@@ -15,6 +15,13 @@ export const usePostStore = create<PostStore>()(
       addPost: (post: Post) => {
         const { postList } = get();
         const updatedList = [...postList, post];
+        set({ postList: updatedList });
+      },
+      editPost: (post: Post) => {
+        const { postList } = get();
+        const updatedList = postList.map((postFromState) =>
+          postFromState.id === post.id ? post : postFromState,
+        );
         set({ postList: updatedList });
       },
     }),

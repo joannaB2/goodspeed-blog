@@ -9,27 +9,32 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-const PostForm = () => {
-  const { addPost } = usePostStore();
+interface PostFormProps {
+  defaultValues?: Post;
+}
+
+const PostForm = ({ defaultValues }: PostFormProps) => {
+  const { addPost, editPost } = usePostStore();
 
   const router = useRouter();
   const formik = useFormik<Post>({
-    initialValues: {
+    initialValues: defaultValues ?? {
       content: '',
-      id: '',
+      id: uuidv4(),
       lead: '',
       tags: '',
-      date: null,
+      date: new Date(),
       title: '',
     },
     onSubmit: (values) => {
-      const postData = {
-        ...values,
-        date: new Date(),
-        id: uuidv4(),
-      };
-      addPost(postData);
-      toast.success('Pomyślnie dodano post');
+      if (!defaultValues) {
+        addPost(values);
+        toast.success('Pomyślnie dodano post');
+      } else {
+        editPost(values);
+        toast.success('Pomyślnie edytowano post');
+      }
+
       formik.resetForm();
       setTimeout(() => router.push('/'), 2000);
     },
@@ -102,7 +107,7 @@ const PostForm = () => {
               Anuluj
             </Link>
             <button className="flex rounded bg-violet-500 p-2" type="submit">
-              Dodaj post
+              {defaultValues ? 'Edytuj post' : 'Dodaj post'}
             </button>
           </div>
         </Box>
